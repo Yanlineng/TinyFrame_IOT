@@ -21,6 +21,11 @@
  extern "C" {
 #endif
 
+/**
+ * @brief If only need one uart, PKG_USING_UART_TWO shoule be 0.
+*/
+#define PKG_USING_UART_TWO  1
+
 //包结构，依据type确定不同包的类型
 typedef struct {
     uint8_t type;    //包类型
@@ -84,6 +89,24 @@ void Send(package *pkg); //打包并发送数据
  *      未知类型指针（实际上是TinyFrame类型的指针）
 */
 void * Tf_get();   //获得句柄指针
+
+
+#if PKG_USING_UART_TWO
+
+/**
+ * @brief Send package to another UART, also named UART_TWO.
+ * @param pkg Package to send.
+ * @return None.
+*/
+void Send2(pakcage *pkg);
+
+/**
+ * @brief Get TinyFrame handle.
+ * @return TinyFrame handle.
+*/
+void *Tf_get2(void);
+
+#endif  /* PKG_USING_UART_TWO */
 
 #ifdef __cplusplus
      }
